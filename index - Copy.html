@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Species Chord Diagram</title>
+<style>
+
+@import url(style.css);
+
+#circle circle {
+  fill: none;
+  pointer-events: all;
+}
+
+.group path {
+  fill-opacity: 1;
+  stroke: #000;
+  stroke-width: .25px;
+}
+
+path.chord {
+  stroke: #000;
+  stroke-width: .25px;
+  fill-opacity: .45;
+  stroke-opacity: .8;
+}
+
+#circle:hover path.fade {
+  display: none;
+}
+
+</style>
+
+<!-- <p>Built with <a href="http://d3js.org/">d3.js</a>. -->
+<body>
+
+<div style="text-align:center">
+<button type="button"  id='taxa' onclick="updatewarming()"  style= "background-color: hsl(119, 33%, 65%); border-color: rgba(5, 12, 7, 0.5); border-width: 3px;">Warming</button>
+<button type="button"  id='trophical' onclick="updatesealevel()" style= "background-color: hsl(119, 33%, 65%);border-color: hsl(119, 33%, 65%); border-width: 3px;" >Sea Level</button>
+<button type="button"  id='acid' onclick="updateacid()"  style= "background-color: hsl(119, 33%, 65%); border-color: hsl(119, 33%, 65%);  border-width: 3px;">Acidification</button>
+<!--  <br>
+<button type="button"  id='all' onclick="allchords()" style= "background-color: #ccc ;border-color: #333; border-width: 3px;" >Show All Chords </button>
+<button type="button"  id='pos' onclick="positivechords()" style= "background-color: hsl(119, 33%, 65%) ;border-color: #8bc48a ; border-width: 3px;" >Show Only Positive</button>
+<button type="button"  id='neg' onclick="negativechords()" style= "background-color:  hsl(1, 97%, 77%);border-color: #fd8b8a; border-width: 3px;" >Show Only Negative</button> -->
+</div>
+
+
+<script src="https://d3js.org/d3.v2.min.js?2.8.1"></script>
+  <script src="d3.layout.chord.sort.js"></script>
+  <script src="main.js"></script>
+
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <!-- <link rel="stylesheet" href="bootstrap.min.css"> -->
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></script>
+ -->
+<script>
+
+var width = $(window).width(),//1200,
+    height = $(window).height()-2,
+    outerRadius = Math.min(width, height) / 2 - 190,
+    innerRadius = outerRadius - 28;
+
+var formatPercent = d3.format(".3f");
+
+var arc = d3.svg.arc()
+    .innerRadius(innerRadius)
+    .outerRadius(outerRadius);
+
+var layout = customChordLayout()// d3.layout.chord()
+    .padding(.045)
+    .sortSubgroups(d3.descending)
+    .sortChords(d3.ascending);
+
+var path = d3.svg.chord()
+    .radius(innerRadius-5);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+  .append("g")
+    .attr("id", "circle")
+    .attr("transform", "translate(" + width / 3 + "," + height / 2 + ")");
+
+svg.append("circle")
+    .attr("r", outerRadius);
+  
+  
+  
+  
+var cities = ["X","Y","Z","Dummy","C","B","A","Dummy"];
+//for acidification data matrices
+var matrix3 =[
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,4,5,5,5,5,5,4],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,2,5,3,3,4,3,2],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,2,5,3,3,4,3,2],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,5,5],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,4,5,4,4,5,4,4],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,2,5,3,3,4,3,2],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,5,5],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,4,5,4,4,5,4,4],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,4,5,1,5,5,5,4],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,2,5,2,3,4,3,2],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,2,5,3,3,4,3,2],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,4,5,4,4,5,4,4],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,2,5,3,3,4,3,2],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[5,4,4,5,5,0,4,5,5,5,4,4,5,4,0,0,0,0,0,0,0,0,0],
+[4,2,2,5,4,0,2,5,4,4,2,2,4,2,0,0,0,0,0,0,0,0,0],
+[5,5,5,5,5,0,5,5,5,5,5,5,5,5,0,0,0,0,0,0,0,0,0],
+[5,3,3,5,4,0,3,5,4,1,2,3,4,3,0,0,0,0,0,0,0,0,0],
+[5,3,3,5,4,0,3,5,4,5,3,3,4,3,0,0,0,0,0,0,0,0,0],
+[5,4,4,5,5,0,4,5,5,5,4,4,5,4,0,0,0,0,0,0,0,0,0],
+[5,3,3,5,4,0,3,5,4,5,3,3,4,3,0,0,0,0,0,0,0,0,0],
+[4,2,2,5,4,0,2,5,4,4,2,2,4,2,0,0,0,0,0,0,0,0,0]
+]
+
+
+//for warming data matrices
+var matrix1 =[
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,5,5],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,4,1,2,2,2,2],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,4,1,2,2,2,2],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,5,5],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4,5,4,4,4,4,4],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,2,4,2,3,3,3,3],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,5,5],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,4,1,2,2,2,2],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,4,1,2,2,2,2],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,4,1,2,2,2,2],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,3,5,2,4,4,4,4],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,4,1,2,2,2,2],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,4,1,2,2,2,2],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,4,1,2,2,2,2],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[5,2,2,5,4,3,5,2,2,2,4,2,2,2,0,0,0,0,0,0,0,0,0],
+[5,1,1,5,4,2,5,1,1,1,3,1,1,1,0,0,0,0,0,0,0,0,0],
+[5,4,4,5,5,4,5,4,4,4,5,4,4,4,0,0,0,0,0,0,0,0,0],
+[5,1,1,5,4,2,5,1,1,1,2,1,1,1,0,0,0,0,0,0,0,0,0],
+[5,2,2,5,4,3,5,2,2,2,4,2,2,2,0,0,0,0,0,0,0,0,0],
+[5,2,2,5,4,3,5,2,2,2,4,2,2,2,0,0,0,0,0,0,0,0,0],
+[5,2,2,5,4,3,5,2,2,2,4,2,2,2,0,0,0,0,0,0,0,0,0],
+[5,2,2,5,4,3,5,2,2,2,4,2,2,2,0,0,0,0,0,0,0,0,0]  
+  ]
+
+//for sealevel data matrices
+var matrix2 =[
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,4,5,5,5,4,5],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,3,2,4,5,4,1,5],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,3,2,4,5,4,1,5],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,4,5,5,5,4,5],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,4,3,4,5,4,2,5],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,3,2,4,5,4,1,5],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,4,5,5,5,4,5],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,3,2,4,5,4,1,5],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,4,5,5,5,4,5],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,3,2,4,5,4,1,5],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,4,4,5,5,5,3,5],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,4,3,4,5,4,2,5],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,4,3,4,5,4,2,5],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,3,2,4,5,4,1,5],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,4,5,5,5,4,5],
+[5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,0,0,0,0,0,0,0,0],
+[5,3,3,5,4,3,5,3,5,3,4,4,4,3,5,0,0,0,0,0,0,0,0],
+[4,2,2,4,3,2,4,2,4,2,4,3,3,2,4,0,0,0,0,0,0,0,0],
+[5,4,4,5,4,4,5,4,5,4,5,4,4,4,5,0,0,0,0,0,0,0,0],
+[5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,0,0,0,0,0,0,0,0],
+[5,4,4,5,4,4,5,4,5,4,5,4,4,4,5,0,0,0,0,0,0,0,0],
+[4,1,1,4,2,1,4,1,4,1,3,2,2,1,4,0,0,0,0,0,0,0,0],
+[5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,0,0,0,0,0,0,0,0]
+  
+  ]
+//warming();
+generatechord(matrix1);
+var taxaortroph = true;  // true for taxa false for trophical
+
+function updatewarming(){
+  taxaortroph = true; 
+
+   $('#taxa')["0"].style.borderColor= "rgba(5, 12, 7, 0.5)";
+  // $('#taxa')["0"].style.backgroundColor= "#5a9e16";
+
+   $('#trophical')["0"].style.borderColor= "hsl(119, 33%, 65%)";  
+   $('#trophical')["0"].style.backgroundColor= "hsl(119, 33%, 65%)";
+   $('#acid')["0"].style.borderColor= "hsl(119, 33%, 65%)";  
+   $('#acid')["0"].style.backgroundColor= "hsl(119, 33%, 65%)";
+
+ d3.select("body").selectAll("svg").remove();
+
+   svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+  .append("g")
+    .attr("id", "circle")
+    .attr("transform", "translate(" + width / 4 + "," + height / 2 + ")");
+
+svg.append("circle")
+    .attr("r", outerRadius);
+
+  generatechord(matrix1);//warming();
+}
+
+function updatesealevel(){
+  taxaortroph = false; 
+
+    $('#trophical')["0"].style.borderColor= "rgba(5, 12, 7, 0.5)";
+  // $('#taxa')["0"].style.backgroundColor= "#5a9e16";
+
+   $('#taxa')["0"].style.borderColor= "hsl(119, 33%, 65%)";  
+   $('#taxa')["0"].style.backgroundColor= "hsl(119, 33%, 65%)"; 
+   $('#acid')["0"].style.borderColor= "hsl(119, 33%, 65%)";  
+   $('#acid')["0"].style.backgroundColor= "hsl(119, 33%, 65%)";
+
+  d3.select("body").selectAll("svg").remove();
+
+   svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+  .append("g")
+    .attr("id", "circle")
+    .attr("transform", "translate(" + width / 4 + "," + height / 2 + ")");
+
+svg.append("circle")
+    .attr("r", outerRadius);
+
+  generatechord(matrix2);//sealevel();
+}
+
+function updateacid(){
+  //taxaortroph = true; 
+
+   $('#acid')["0"].style.borderColor= "rgba(5, 12, 7, 0.5)";
+  // $('#taxa')["0"].style.backgroundColor= "#5a9e16";
+
+   $('#trophical')["0"].style.borderColor= "hsl(119, 33%, 65%)";  
+   $('#trophical')["0"].style.backgroundColor= "hsl(119, 33%, 65%)";
+   $('#taxa')["0"].style.borderColor= "hsl(119, 33%, 65%)";  
+   $('#taxa')["0"].style.backgroundColor= "hsl(119, 33%, 65%)"; 
+
+ d3.select("body").selectAll("svg").remove();
+
+   svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+  .append("g")
+    .attr("id", "circle")
+    .attr("transform", "translate(" + width / 4 + "," + height / 2 + ")");
+
+svg.append("circle")
+    .attr("r", outerRadius);
+
+  generatechord(matrix3);//acid();
+}
+
+function sealevel(){
+  d3.csv("Data/species-oceanic.csv", function(cities) {
+ // d3.json("matrix3.json", function(matrix2) {
+
+    // Compute the chord layout.
+    layout.matrix(matrix2);
+
+    // Add a group per neighborhood.
+    var group = svg.selectAll(".group")
+        .data(layout.groups)
+      .enter().append("g")
+        .attr("class", "group")        
+        .on("mouseover", mouseover)
+        .on("mouseout", mouseout);
+
+    // Add a mouseover title.
+    group.append("title").text(function(d, i) {
+       return cities[i].name + ", Total Value:" + formatPercent(d.value) 
+    });
+
+    // Add the group arc.
+    var groupPath = group.append("path")
+        .attr("id", function(d, i) { return "group" + i; })
+        .attr("d", arc)
+        .style("fill", function(d, i) { return cities[i].color; });
+
+    // Add a text label.
+    var groupText = group.append("text")
+        //.attr("x", function(d, i){console.log( groupPath[0][i].getTotalLength()/2);})   //6
+        .attr("dy", 15)
+         
+
+//     groupText.append("textPath")
+//         .attr("xlink:href", function(d, i) { return "#group" + i; })
+//         .text(function(d, i) { return cities[i].name; });
+
+    // Remove the labels that don't fit. :(
+//     groupText.filter(function(d, i) { return groupPath[0][i].getTotalLength() / 2 - 30 < this.getComputedTextLength(); })
+//         .remove();
+    
+    
+    
+      group.append("svg:text")
+      .each(function(d,i) { d.angle = (d.startAngle + d.endAngle) / 2; })
+      .attr("dy", ".35em")
+      .attr("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
+      .attr("transform", function(d) {
+        return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
+            + "translate(" + (innerRadius + 30) + ")"
+            + (d.angle > Math.PI ? "rotate(180)" : "");
+      })
+      .text(function(d,i) { return cities[i].name; })
+      .style("fill", function(d, i) { return cities[i].color; })
+    .attr("shape-rendering","crispEdges")
+    .attr("font-family","cursive")
+    .attr("font-size","15px");
+    
+    
+    
+    
+    
+    
+
+    // Add the chords.
+    var chord = svg.selectAll(".chord")
+        .data(layout.chords)
+      .enter().append("path")
+        .attr("class", "chord")
+        .style("fill", function(d,i) { 
+          //console.log(d);
+          //console.log(matrix2[d.source.index][d.target.index]);
+          if(matrix2[d.source.index][d.target.index] ==1 ) return 'cyan';
+          else if(matrix2[d.source.index][d.target.index] ==2 ) return 'yellow';
+          else if(matrix2[d.source.index][d.target.index] ==3 ) return 'purple';
+          else if(matrix2[d.source.index][d.target.index] ==4 ) return 'green';
+          else return 'red';
+          //return cities[d.source.index].color; 
+        })
+        .style("opacity", function(d){
+           if (showchords==2){
+             if(matrix2[d.source.index][d.target.index] < 0) return 0;
+             else return 1;
+           }
+           else if (showchords==3){
+             if(matrix2[d.source.index][d.target.index] > 0) return 0;
+             else return 1;
+           }
+        })
+        .attr("d", path)
+        .on("mouseover", chordmouseover)
+        .on("mouseout", chordmouseout);
+
+    //Add an elaborate mouseover title for each chord.
+    chord.append("title").text(function(d) {
+      var temp=1;
+      if(matrix2[d.source.index][d.target.index] < 0) temp=-1;
+      return cities[d.source.index].name
+          + " → " + cities[d.target.index].name
+          + ": " + formatPercent(d.source.value*temp)
+          + "\n" + cities[d.target.index].name
+          + " → " + cities[d.source.index].name
+          + ": " + formatPercent(d.target.value*temp);
+    });
+
+    function mouseover(d, i) {
+      // chord.classed("fade", function(p) {
+      //   return p.source.index != i
+      //       && p.target.index != i;
+      // });
+       svg.selectAll("path.chord")
+        .filter(function(d) { 
+          //console.log(d);
+          if(showchords==1)  return d.source.index !== i && d.target.index !== i; 
+          else if(showchords==2) { 
+             if(matrix2[d.source.index][d.target.index] > 0) return d.source.index !== i && d.target.index !== i; 
+          }
+          else if(showchords==3) { 
+             if(matrix2[d.source.index][d.target.index] < 0) return d.source.index !== i && d.target.index !== i; 
+          }
+        })
+        .transition()
+        .style("opacity", 0.15);
+    }
+    function mouseout(d, i) {
+       svg.selectAll("path.chord")
+        .filter(function(d) { 
+          if(showchords==1)  return d.source.index !== i && d.target.index !== i; 
+          else if(showchords==2) { 
+             if(matrix2[d.source.index][d.target.index] > 0) return d.source.index !== i && d.target.index !== i; 
+          }
+          else if(showchords==3) { 
+             if(matrix2[d.source.index][d.target.index] < 0) return d.source.index !== i && d.target.index !== i; 
+          }
+        })
+        .transition()
+        .style("opacity", 1);
+    }
+    
+    function chordmouseover(d, i) {
+      // chord.classed("fade", function(p) {
+      //   return p.source.index != i
+      //       && p.target.index != i;
+      // });
+       svg.selectAll("path.chord")
+        .filter(function(d) { 
+          //console.log(d);
+          if(showchords==1)  return true; 
+          else if(showchords==2) { 
+             if(matrix2[d.source.index][d.target.index] > 0) return true; 
+          }
+          else if(showchords==3) { 
+             if(matrix2[d.source.index][d.target.index] < 0) return true; 
+          }
+        })
+        .transition()
+        .style("opacity", 0.15);
+
+        if(showchords==2) { 
+             if(matrix2[d.source.index][d.target.index] > 0) d3.select(this).transition().style("opacity", 1);
+          }
+          else if(showchords==3) { 
+             if(matrix2[d.source.index][d.target.index] < 0) d3.select(this).transition().style("opacity", 1);
+          }
+          else d3.select(this).transition().style("opacity", 1);
+        
+    }
+    function chordmouseout(d, i) {
+       svg.selectAll("path.chord")
+        .filter(function(d) { 
+          if(showchords==1)  return true; 
+          else if(showchords==2) { 
+             if(matrix2[d.source.index][d.target.index] > 0) return true; 
+          }
+          else if(showchords==3) { 
+             if(matrix2[d.source.index][d.target.index] < 0) return true; 
+          }
+        })
+        .transition()
+        .style("opacity", 1);
+    }
+
+ //Append Legend
+var teams = [
+  "Global Solutions " ,
+  "Local Solutions",
+  "Ecosystem Components ",
+  "5",
+  "4",
+  "3",
+"2",
+"1"];
+
+var colors = [ "#DF7C00", "#BFAE40", "#083E77","red","green", "purple","yellow","cyan"];
+
+var color = d3.scale.ordinal()      //custom color scale for teams
+                .range(colors)
+                .domain(teams);
+svg.append("rect")   
+.attr("x",-width/4)
+.attr("y",-height/2)
+.attr("width",180)
+.attr("height",180)
+.attr("style","fill-opacity:0;stroke:black;stroke-width:1.5px");
+
+var legend = svg.append("g")
+    .attr("class", "legend")
+    .attr("width", 150)
+    .attr("height", 150)
+    .attr("transform", "translate(-"+ ((width/4)-5) + ",-"+ ((height/2)-10) +" )");
+
+var gs = legend.selectAll("g.keybox")
+          .data(teams).enter().append("g")
+          .attr("class", "keybox")
+          .attr("width", 80)
+          .attr("height", 15);
+
+gs.append("text")
+  .attr("class","keybox").attr("x",function(d,i){
+    if(i<9){return 15;}
+    else{return 90;}})
+  .attr("y",function(d,i){
+    if(i<9){return i*20 +9;}
+    else{return (i-4)*20 +9;}})
+  .text(function(d,i){
+    return teams[i];})
+  .attr("font-size","14px");
+  
+
+gs.append("rect")        
+  .attr("x",function(d,i){
+    if(i<9){return 0;}
+    else{return 75;}})
+  .attr("y",function(d,i){
+     if(i<9){return i*20;}
+     else{return (i-4) * 20;}})
+  .attr("width",10)
+  .attr("height",10)
+  .style("fill",function(d, i){
+    return colors[i];});
+
+
+
+  //});
+});
+
+}
+
+
+function warming(){
+  d3.csv("Data/species-oceanic.csv", function(cities) {
+  //d3.json("matrix2.json", function(matrix2) {
+
+    // Compute the chord layout.
+    layout.matrix(matrix1);
+
+    // Add a group per neighborhood.
+    var group = svg.selectAll(".group")
+        .data(layout.groups)
+      .enter().append("g")
+        .attr("class", "group")        
+        .on("mouseover", mouseover)
+        .on("mouseout", mouseout);
+
+    // Add a mouseover title.
+    group.append("title").text(function(d, i) {
+       return cities[i].name + ", Total Value:" + formatPercent(d.value) 
+    });
+
+    // Add the group arc.
+    var groupPath = group.append("path")
+        .attr("id", function(d, i) { return "group" + i; })
+        .attr("d", arc)
+        .style("fill", function(d, i) { return cities[i].color; });
+
+    // Add a text label.
+    var groupText = group.append("text")
+        //.attr("x", function(d, i){console.log( groupPath[0][i].getTotalLength()/2);})   //6
+        .attr("dy", 15)
+         
+
+//     groupText.append("textPath")
+//         .attr("xlink:href", function(d, i) { return "#group" + i; })
+//         .text(function(d, i) { return cities[i].name; });
+
+    // Remove the labels that don't fit. :(
+//     groupText.filter(function(d, i) { return groupPath[0][i].getTotalLength() / 2 - 30 < this.getComputedTextLength(); })
+//         .remove();
+    
+    
+    
+      group.append("svg:text")
+      .each(function(d,i) { d.angle = (d.startAngle + d.endAngle) / 2; })
+      .attr("dy", ".35em")
+      .attr("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
+      .attr("transform", function(d) {
+        return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
+            + "translate(" + (innerRadius + 30) + ")"
+            + (d.angle > Math.PI ? "rotate(180)" : "");
+      })
+      .text(function(d,i) { return cities[i].name; })
+      .style("fill", function(d, i) { return cities[i].color; })
+    .attr("shape-rendering","crispEdges")
+    .attr("font-family","cursive")
+    .attr("font-size","15px");
+    
+    
+    
+    
+    
+    
+
+    // Add the chords.
+    var chord = svg.selectAll(".chord")
+        .data(layout.chords)
+      .enter().append("path")
+        .attr("class", "chord")
+        .style("fill", function(d,i) { 
+          //console.log(d);
+          //console.log(matrix2[d.source.index][d.target.index]);
+          if(matrix1[d.source.index][d.target.index] ==1 ) return 'cyan';
+          else if(matrix1[d.source.index][d.target.index] ==2 ) return 'yellow';
+          else if(matrix1[d.source.index][d.target.index] ==3 ) return 'purple';
+          else if(matrix1[d.source.index][d.target.index] ==4 ) return 'green';
+          else return 'red';
+          //return cities[d.source.index].color; 
+        })
+        .style("opacity", function(d){
+           if (showchords==2){
+             if(matrix1[d.source.index][d.target.index] < 0) return 0;
+             else return 1;
+           }
+           else if (showchords==3){
+             if(matrix1[d.source.index][d.target.index] > 0) return 0;
+             else return 1;
+           }
+        })
+        .attr("d", path)
+        .on("mouseover", chordmouseover)
+        .on("mouseout", chordmouseout);
+
+    //Add an elaborate mouseover title for each chord.
+    chord.append("title").text(function(d) {
+      //console.log(matrix2[d.source.index][d.target.index]);
+      var temp=1;
+      if(matrix1[d.source.index][d.target.index] < 0) temp=-1;
+      return cities[d.source.index].name
+          + " → " + cities[d.target.index].name
+          + ": " + formatPercent(d.source.value*temp)
+          + "\n" + cities[d.target.index].name
+          + " → " + cities[d.source.index].name
+          + ": " + formatPercent(d.target.value*temp);
+    });
+
+   function mouseover(d, i) {
+      // chord.classed("fade", function(p) {
+      //   return p.source.index != i
+      //       && p.target.index != i;
+      // });
+       svg.selectAll("path.chord")
+        .filter(function(d) { 
+          //console.log(d);
+          if(showchords==1)  return d.source.index !== i && d.target.index !== i; 
+          else if(showchords==2) { 
+             if(matrix1[d.source.index][d.target.index] > 0) return d.source.index !== i && d.target.index !== i; 
+          }
+          else if(showchords==3) { 
+             if(matrix1[d.source.index][d.target.index] < 0) return d.source.index !== i && d.target.index !== i; 
+          }
+        })
+        .transition()
+        .style("opacity", 0.15);
+    }
+    function mouseout(d, i) {
+       svg.selectAll("path.chord")
+        .filter(function(d) { 
+          if(showchords==1)  return d.source.index !== i && d.target.index !== i; 
+          else if(showchords==2) { 
+             if(matrix1[d.source.index][d.target.index] > 0) return d.source.index !== i && d.target.index !== i; 
+          }
+          else if(showchords==3) { 
+             if(matrix1[d.source.index][d.target.index] < 0) return d.source.index !== i && d.target.index !== i; 
+          }
+        })
+        .transition()
+        .style("opacity", 1);
+    }
+    
+  function chordmouseover(d, i) {
+      // chord.classed("fade", function(p) {
+      //   return p.source.index != i
+      //       && p.target.index != i;
+      // });
+       svg.selectAll("path.chord")
+        .filter(function(d) { 
+          //console.log(d);
+          if(showchords==1)  return true; 
+          else if(showchords==2) { 
+             if(matrix1[d.source.index][d.target.index] > 0) return true; 
+          }
+          else if(showchords==3) { 
+             if(matrix1[d.source.index][d.target.index] < 0) return true; 
+          }
+        })
+        .transition()
+        .style("opacity", 0.15);
+
+        if(showchords==2) { 
+             if(matrix1[d.source.index][d.target.index] > 0) d3.select(this).transition().style("opacity", 1);
+          }
+          else if(showchords==3) { 
+             if(matrix1[d.source.index][d.target.index] < 0) d3.select(this).transition().style("opacity", 1);
+          }
+          else d3.select(this).transition().style("opacity", 1);
+        
+    }
+    function chordmouseout(d, i) {
+       svg.selectAll("path.chord")
+        .filter(function(d) { 
+          if(showchords==1)  return true; 
+          else if(showchords==2) { 
+             if(matrix1[d.source.index][d.target.index] > 0) return true; 
+          }
+          else if(showchords==3) { 
+             if(matrix1[d.source.index][d.target.index] < 0) return true; 
+          }
+        })
+        .transition()
+        .style("opacity", 1);
+    }
+
+ //Append Legend
+var teams = [
+  "Global Solutions " ,
+  "Local Solutions",
+  "Ecosystem Components ",
+  "5",
+  "4",
+  "3",
+"2",
+"1"];
+
+var colors = [ "#DF7C00", "#BFAE40", "#083E77","red","green", "purple","yellow","cyan"];
+
+var color = d3.scale.ordinal()      //custom color scale for teams
+                .range(colors)
+                .domain(teams);
+svg.append("rect")   
+.attr("x",-width/4)
+.attr("y",-height/2)
+.attr("width",180)
+.attr("height",180)
+.attr("style","fill-opacity:0;stroke:black;stroke-width:1.5px");
+
+var legend = svg.append("g")
+    .attr("class", "legend")
+    .attr("width", 150)
+    .attr("height", 150)
+    .attr("transform", "translate(-"+ ((width/4)-5) + ",-"+ ((height/2)-10) +" )");
+
+var gs = legend.selectAll("g.keybox")
+          .data(teams).enter().append("g")
+          .attr("class", "keybox")
+          .attr("width", 80)
+          .attr("height", 15);
+
+gs.append("text")
+  .attr("class","keybox").attr("x",function(d,i){
+    if(i<9){return 15;}
+    else{return 90;}})
+  .attr("y",function(d,i){
+    if(i<9){return i*20 +9;}
+    else{return (i-4)*20 +9;}})
+  .text(function(d,i){
+    return teams[i];})
+  .attr("font-size","14px");
+  
+
+gs.append("rect")        
+  .attr("x",function(d,i){
+    if(i<9){return 0;}
+    else{return 75;}})
+  .attr("y",function(d,i){
+     if(i<9){return i*20;}
+     else{return (i-4) * 20;}})
+  .attr("width",10)
+  .attr("height",10)
+  .style("fill",function(d, i){
+    return colors[i];});
+
+
+
+  //});
+});
+
+} //#8bc48a #fd8b8a
+
+function acid(){
+  d3.csv("Data/species-oceanic.csv", function(cities) {
+  //d3.json("matrix2.json", function(matrix2) {
+
+    // Compute the chord layout.
+    layout.matrix(matrix3);
+
+    // Add a group per neighborhood.
+    var group = svg.selectAll(".group")
+        .data(layout.groups)
+      .enter().append("g")
+        .attr("class", "group")        
+        .on("mouseover", mouseover)
+        .on("mouseout", mouseout);
+
+    // Add a mouseover title.
+    group.append("title").text(function(d, i) {
+       return cities[i].name + ", Total Value:" + formatPercent(d.value) 
+    });
+
+    // Add the group arc.
+    var groupPath = group.append("path")
+        .attr("id", function(d, i) { return "group" + i; })
+        .attr("d", arc)
+        .style("fill", function(d, i) { return cities[i].color; });
+
+    // Add a text label.
+    var groupText = group.append("text")
+        //.attr("x", function(d, i){console.log( groupPath[0][i].getTotalLength()/2);})   //6
+        .attr("dy", 15)
+         
+
+//     groupText.append("textPath")
+//         .attr("xlink:href", function(d, i) { return "#group" + i; })
+//         .text(function(d, i) { return cities[i].name; });
+
+    // Remove the labels that don't fit. :(
+//     groupText.filter(function(d, i) { return groupPath[0][i].getTotalLength() / 2 - 30 < this.getComputedTextLength(); })
+//         .remove();
+    
+    
+    
+      group.append("svg:text")
+      .each(function(d,i) { d.angle = (d.startAngle + d.endAngle) / 2; })
+      .attr("dy", ".35em")
+      .attr("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
+      .attr("transform", function(d) {
+        return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
+            + "translate(" + (innerRadius + 30) + ")"
+            + (d.angle > Math.PI ? "rotate(180)" : "");
+      })
+      .text(function(d,i) { return cities[i].name; })
+      .style("fill", function(d, i) { return cities[i].color; })
+    .attr("shape-rendering","crispEdges")
+    .attr("font-family","cursive")
+    .attr("font-size","15px");
+    
+    
+    
+    
+    
+    
+
+    // Add the chords.
+    var chord = svg.selectAll(".chord")
+        .data(layout.chords)
+      .enter().append("path")
+        .attr("class", "chord")
+        .style("fill", function(d,i) { 
+          //console.log(d);
+          //console.log(matrix2[d.source.index][d.target.index]);
+          if(matrix3[d.source.index][d.target.index] ==1 ) return 'cyan';
+          else if(matrix3[d.source.index][d.target.index] ==2 ) return 'yellow';
+          else if(matrix3[d.source.index][d.target.index] ==3 ) return 'purple';
+          else if(matrix3[d.source.index][d.target.index] ==4 ) return 'green';
+          else return 'red';
+          //return cities[d.source.index].color; 
+        })
+        .style("opacity", function(d){
+           if (showchords==2){
+             if(matrix3[d.source.index][d.target.index] < 0) return 0;
+             else return 1;
+           }
+           else if (showchords==3){
+             if(matrix3[d.source.index][d.target.index] > 0) return 0;
+             else return 1;
+           }
+        })
+        .attr("d", path)
+        .on("mouseover", chordmouseover)
+        .on("mouseout", chordmouseout);
+
+    //Add an elaborate mouseover title for each chord.
+    chord.append("title").text(function(d) {
+      //console.log(matrix2[d.source.index][d.target.index]);
+      var temp=1;
+      if(matrix3[d.source.index][d.target.index] < 0) temp=-1;
+      return cities[d.source.index].name
+          + " → " + cities[d.target.index].name
+          + ": " + formatPercent(d.source.value*temp)
+          + "\n" + cities[d.target.index].name
+          + " → " + cities[d.source.index].name
+          + ": " + formatPercent(d.target.value*temp);
+    });
+
+   function mouseover(d, i) {
+      // chord.classed("fade", function(p) {
+      //   return p.source.index != i
+      //       && p.target.index != i;
+      // });
+       svg.selectAll("path.chord")
+        .filter(function(d) { 
+          //console.log(d);
+          if(showchords==1)  return d.source.index !== i && d.target.index !== i; 
+          else if(showchords==2) { 
+             if(matrix3[d.source.index][d.target.index] > 0) return d.source.index !== i && d.target.index !== i; 
+          }
+          else if(showchords==3) { 
+             if(matrix3[d.source.index][d.target.index] < 0) return d.source.index !== i && d.target.index !== i; 
+          }
+        })
+        .transition()
+        .style("opacity", 0.15);
+    }
+    function mouseout(d, i) {
+       svg.selectAll("path.chord")
+        .filter(function(d) { 
+          if(showchords==1)  return d.source.index !== i && d.target.index !== i; 
+          else if(showchords==2) { 
+             if(matrix3[d.source.index][d.target.index] > 0) return d.source.index !== i && d.target.index !== i; 
+          }
+          else if(showchords==3) { 
+             if(matrix3[d.source.index][d.target.index] < 0) return d.source.index !== i && d.target.index !== i; 
+          }
+        })
+        .transition()
+        .style("opacity", 1);
+    }
+    
+  function chordmouseover(d, i) {
+      // chord.classed("fade", function(p) {
+      //   return p.source.index != i
+      //       && p.target.index != i;
+      // });
+       svg.selectAll("path.chord")
+        .filter(function(d) { 
+          //console.log(d);
+          if(showchords==1)  return true; 
+          else if(showchords==2) { 
+             if(matrix3[d.source.index][d.target.index] > 0) return true; 
+          }
+          else if(showchords==3) { 
+             if(matrix3[d.source.index][d.target.index] < 0) return true; 
+          }
+        })
+        .transition()
+        .style("opacity", 0.15);
+
+        if(showchords==2) { 
+             if(matrix3[d.source.index][d.target.index] > 0) d3.select(this).transition().style("opacity", 1);
+          }
+          else if(showchords==3) { 
+             if(matrix3[d.source.index][d.target.index] < 0) d3.select(this).transition().style("opacity", 1);
+          }
+          else d3.select(this).transition().style("opacity", 1);
+        
+    }
+    function chordmouseout(d, i) {
+       svg.selectAll("path.chord")
+        .filter(function(d) { 
+          if(showchords==1)  return true; 
+          else if(showchords==2) { 
+             if(matrix3[d.source.index][d.target.index] > 0) return true; 
+          }
+          else if(showchords==3) { 
+             if(matrix3[d.source.index][d.target.index] < 0) return true; 
+          }
+        })
+        .transition()
+        .style("opacity", 1);
+    }
+
+ //Append Legend
+var teams = [
+  "Global Solutions " ,
+  "Local Solutions",
+  "Ecosystem Components ",
+  "5",
+  "4",
+  "3",
+"2",
+"1"];
+
+var colors = [ "#DF7C00", "#BFAE40", "#083E77","red","green", "purple","yellow","cyan"];
+
+var color = d3.scale.ordinal()      //custom color scale for teams
+                .range(colors)
+                .domain(teams);
+svg.append("rect")   
+.attr("x",-width/4)
+.attr("y",-height/2)
+.attr("width",180)
+.attr("height",180)
+.attr("style","fill-opacity:0;stroke:black;stroke-width:1.5px");
+
+var legend = svg.append("g")
+    .attr("class", "legend")
+    .attr("width", 150)
+    .attr("height", 150)
+    .attr("transform", "translate(-"+ ((width/4)-5) + ",-"+ ((height/2)-10) +" )");
+
+var gs = legend.selectAll("g.keybox")
+          .data(teams).enter().append("g")
+          .attr("class", "keybox")
+          .attr("width", 80)
+          .attr("height", 15);
+
+gs.append("text")
+  .attr("class","keybox").attr("x",function(d,i){
+    if(i<9){return 15;}
+    else{return 90;}})
+  .attr("y",function(d,i){
+    if(i<9){return i*20 +9;}
+    else{return (i-4)*20 +9;}})
+  .text(function(d,i){
+    return teams[i];})
+  .attr("font-size","14px");
+  
+
+gs.append("rect")        
+  .attr("x",function(d,i){
+    if(i<9){return 0;}
+    else{return 75;}})
+  .attr("y",function(d,i){
+     if(i<9){return i*20;}
+     else{return (i-4) * 20;}})
+  .attr("width",10)
+  .attr("height",10)
+  .style("fill",function(d, i){
+    return colors[i];});
+
+
+
+  //});
+});
+
+} //#8bc48a #fd8b8a
+
+
+var showchords=1; //1 for all. 2 for pos, 3 for neg
+function allchords(){
+  showchords=1;
+  $('#pos')["0"].style.borderColor= "#8bc48a";
+  $('#neg')["0"].style.borderColor= "#fd8b8a"; 
+
+  $('#all')["0"].style.borderColor= "#333"; 
+  svg.selectAll(".chord")
+  .style("opacity", function(d){
+    return 1;
+  })
+}
+
+function positivechords(){
+  showchords=2;
+  $('#all')["0"].style.borderColor= "#ccc";
+  $('#neg')["0"].style.borderColor= "#fd8b8a"; 
+
+  $('#pos')["0"].style.borderColor= "#333"; 
+
+  svg.selectAll(".chord").style("opacity", function(d){
+    if(taxaortroph){
+      if(matrix2[d.source.index][d.target.index] < 0) return 0;
+      else return 1;
+    }
+    else {
+      if(matrix3[d.source.index][d.target.index] < 0) return 0;
+      else return 1;
+    }
+  })
+}
+
+function negativechords(){
+  showchords=3;
+  $('#all')["0"].style.borderColor= "#ccc";
+  $('#pos')["0"].style.borderColor= "#8bc48a"; 
+
+  $('#neg')["0"].style.borderColor= "#333"; 
+  //console.log("tt");
+  svg.selectAll(".chord")
+  .style("opacity", function(d){
+    if(taxaortroph){
+      if(matrix2[d.source.index][d.target.index] > 0) return 0;
+      else return 1;
+    }
+    else {
+      if(matrix3[d.source.index][d.target.index] > 0) return 0;
+      else return 1;
+    }
+
+  })
+}
+
+
+
+
+</script>
+
+
+
+</body>

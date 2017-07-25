@@ -1,0 +1,27 @@
+name,color
+Renewables,#DF7C00
+Vegetation_g,#DF7C00
+Fertilization,#DF7C00
+Alkalinity_g,#DF7C00
+Hybrids,#DF7C00
+Cloud,#DF7C00
+Albedo,#DF7C00
+Alkalinity_l,#BFAE40
+Vegetation_l,#BFAE40
+Pollution,#BFAE40
+Hydrology,#BFAE40
+Overexploitation,#BFAE40
+Protection,#BFAE40
+Evolution,#BFAE40
+Relocation_Restoration,#BFAE40
+Seagrass Habitats,#8bc48a
+Coral Reefs,#8bc48a
+Mangroves and Saltmarshes,#8bc48a
+Arctic Biota,#8bc48a
+Fin Fisheries,#8bc48a
+Fish Aquaculture,#8bc48a
+Coastal Protection,#8bc48a
+Bivalves Fisheries and Aquaculture,#8bc48a
+Warming,#DB7093
+Ocean Acidification,#DB7093
+Sea Level Rise,#DB7093

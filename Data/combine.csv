@@ -1,0 +1,40 @@
+,Renewable energy,Vegetation (g),Productivity,Alkalinity (g),Hybrid,Cloud,Albedo,Alkalinity (l),Vegetation (l),Pollution,Hydrology,Ressource management,Protection,Evolution,Relocation Restoration,Seagrass habitats_warming,Seagrass habitats_acidification,Seagrass habitats_sea level rise,Coral reefs_warming,Coral reefs_acidification,Coral reefs_sea level rise,Mangroves & saltmarshes_warming,Mangroves & saltmarshes_acidification,Mangroves & saltmarshes_sea level rise,Arctic biota_warming,Arctic biota_acidification,Arctic biota_sea level rise,Fin fisheries_warming,Fin fisheries_acidification,Fin fisheries_sea level rise,Fish aquaculture_warming,Fish aquaculture_acidification,Fish aquaculture_sea level rise,Coastal protection_warming,Coastal protection_acidification,Coastal protection_sea level rise,Fisheries & aquaculture_warming,Fisheries & aquaculture_acidification,Fisheries & aquaculture_sea level rise
+Renewable energy,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,4,5,5,5,4,5,5,5,5,5,5,5,5,5,5,5,4,5,4,5
+Vegetation (g),0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,4,5,1,2,3,4,5,2,1,3,4,2,3,5,2,4,4,2,3,1,2,2,5
+Productivity,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,4,5,1,2,3,4,5,2,1,3,4,2,3,5,2,4,4,2,3,1,2,2,5
+Alkalinity (g),0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,5,5,4,5,5,5,5,5,5,5,5,5,5,5,4,5,5,5
+Hybrid,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,5,5,4,4,4,5,5,3,4,4,4,4,4,5,4,5,4,4,4,2,4,4,5
+Cloud,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,5,2,0,3,4,0,2,2,0,4,3,0,5,3,0,4,3,0,1,3,0,5
+Albedo,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,4,5,5,2,5,5,5,4,5,3,5,5,3,5,5,4,5,5,3,4,5,2,5
+Alkalinity (l),0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,5,5,1,5,3,4,5,2,1,5,4,2,5,5,2,5,4,2,5,1,2,5,5
+Vegetation (l),0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,5,5,1,4,5,4,5,4,1,4,5,2,4,5,2,5,5,2,4,4,2,4,5
+Pollution,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,5,5,1,4,3,4,5,2,1,1,4,2,5,5,2,5,4,2,5,1,2,4,5
+Hydrology,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4,5,3,2,4,5,5,4,2,2,5,4,3,5,4,4,5,4,3,3,4,2,5
+Ressource management,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,4,5,1,2,4,4,5,3,1,3,4,2,3,5,2,4,4,2,3,2,2,2,5
+Protection,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,5,5,1,4,4,4,5,3,1,4,4,2,4,5,2,5,4,2,4,2,2,4,5
+Evolution,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,4,5,1,2,3,4,5,2,1,3,4,2,3,5,2,4,4,2,3,1,2,2,5
+Relocation Restoration,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0,5,0,0,4,0,0,5,0,0,5,0,0,5,0,0,4,0,0,5
+Seagrass habitats_warming,5,2,2,5,4,3,5,2,2,2,4,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Seagrass habitats_acidification,5,4,4,5,5,0,4,5,5,5,4,4,5,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Seagrass habitats_sea level rise,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Coral reefs_warming,5,1,1,5,4,2,5,1,1,1,3,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Coral reefs_acidification,4,2,2,5,4,0,2,5,4,4,2,2,4,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Coral reefs_sea level rise,5,3,3,5,4,3,5,3,5,3,4,4,4,3,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Mangroves & saltmarshes_warming,5,4,4,5,5,4,5,4,4,4,5,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Mangroves & saltmarshes_acidification,5,5,5,5,5,0,5,5,5,5,5,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Mangroves & saltmarshes_sea level rise,4,2,2,4,3,2,4,2,4,2,4,3,3,2,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Arctic biota_warming,5,1,1,5,4,2,5,1,1,1,2,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Arctic biota_acidification,5,3,3,5,4,0,3,5,4,1,2,3,4,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Arctic biota_sea level rise,5,4,4,5,4,4,5,4,5,4,5,4,4,4,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Fin fisheries_warming,5,2,2,5,4,3,5,2,2,2,4,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Fin fisheries_acidification,5,3,3,5,4,0,3,5,4,5,3,3,4,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Fin fisheries_sea level rise,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Fish aquaculture_warming,5,2,2,5,4,3,5,2,2,2,4,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Fish aquaculture_acidification,5,4,4,5,5,0,4,5,5,5,4,4,5,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Fish aquaculture_sea level rise,5,4,4,5,4,4,5,4,5,4,5,4,4,4,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Coastal protection_warming,5,2,2,5,4,3,5,2,2,2,4,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Coastal protection_acidification,5,3,3,5,4,0,3,5,4,5,3,3,4,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Coastal protection_sea level rise,4,1,1,4,2,1,4,1,4,1,3,2,2,1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Fisheries & aquaculture_warming,5,2,2,5,4,3,5,2,2,2,4,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Fisheries & aquaculture_acidification,4,2,2,5,4,0,2,5,4,4,2,2,4,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Fisheries & aquaculture_sea level rise,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0

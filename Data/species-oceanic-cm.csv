@@ -1,0 +1,40 @@
+name,color
+Renewable energy,#DF7C00
+Vegetation (g),#DF7C00
+Productivity,#DF7C00
+Alkalinity (g),#DF7C00
+Hybrid,#DF7C00
+Cloud,#DF7C00
+Albedo,#DF7C00
+Alkalinity (l),#BFAE40
+Vegetation (l),#BFAE40
+Pollution,#BFAE40
+Hydrology,#BFAE40
+Ressource management,#BFAE40
+Protection,#BFAE40
+Evolution,#BFAE40
+Relocation Restoration,#BFAE40
+Seagrass habitats_warming,#556B2F
+Seagrass habitats_acidification,#32CD32
+Seagrass habitats_sea level rise,#00FF7F
+Coral reefs_warming,#556B2F
+Coral reefs_acidification,#32CD32
+Coral reefs_sea level rise,#00FF7F
+Mangroves & saltmarshes_warming,#556B2F
+Mangroves & saltmarshes_acidification,#32CD32
+Mangroves & saltmarshes_sea level rise,#00FF7F
+Arctic biota_warming,#556B2F
+Arctic biota_acidification,#32CD32
+Arctic biota_sea level rise,#00FF7F
+Fin fisheries_warming,#556B2F
+Fin fisheries_acidification,#32CD32
+Fin fisheries_sea level rise,#00FF7F
+Fish aquaculture_warming,#556B2F
+Fish aquaculture_acidification,#32CD32
+Fish aquaculture_sea level rise,#00FF7F
+Coastal protection_warming,#556B2F
+Coastal protection_acidification,#32CD32
+Coastal protection_sea level rise,#00FF7F
+Fisheries&aquaculture_warming,#556B2F
+Fisheries&aquaculture_acidification,#32CD32
+Fisheries&aquaculture_sea level,#00FF7F

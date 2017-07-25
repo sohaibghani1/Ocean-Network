@@ -1,0 +1,49 @@
+Category,Criteria,Renewable energy,Vegetation (g),Productivity,Alkalinity (g),Hybrid,Cloud,Albedo,Alkalinity (l),Vegetation (l),Pollution,Hydrology,Ressource management,Protection,Evolution,Relocation Restoration
+Seagrass habitats,Warming,5,2,2,5,4,3,5,2,2,2,4,2,2,2,0
+Seagrass habitats,Acidification,5,4,4,5,5,0,4,5,5,5,4,4,5,4,0
+Seagrass habitats,Sea level rise,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5
+Seagrass habitats,Other drivers,2,NA,0,NA,2,0,0,0,5,4,4,4,4,0,4
+Seagrass habitats,Co-benefits,2,NA,0,NA,3,0,0,1,5,5,4,4,5,0,5
+Seagrass habitats,Lack of unintended consequences,4,NA,2,NA,3,3,3,2,5,5,4,5,5,5,4
+Coral reefs,Warming,5,1,1,5,4,2,5,1,1,1,3,1,1,1,0
+Coral reefs,Acidification,4,2,2,5,4,0,2,5,4,4,2,2,4,2,0
+Coral reefs,Sea level rise,5,3,3,5,4,3,5,3,5,3,4,4,4,3,5
+Coral reefs,Other drivers,2,NA,0,NA,0,3,1,2,4,3,1,2,3,4,4
+Coral reefs,Co-benefits,2,NA,0,NA,0,3,3,2,5,4,3,3,5,4,5
+Coral reefs,Lack of unintended consequences,2,NA,0,NA,3,1,1,1,5,5,4,4,5,2,2
+Mangroves and saltmarshes,Warming,5,4,4,5,5,4,5,4,4,4,5,4,4,4,0
+Mangroves and saltmarshes,Acidification,5,5,5,5,5,0,5,5,5,5,5,5,5,5,0
+Mangroves and saltmarshes,Sea level rise,4,2,2,4,3,2,4,2,4,2,4,3,3,2,4
+Mangroves and saltmarshes,Other drivers,1,NA,1,NA,2,1,1,1,5,2,5,5,5,2,4
+Mangroves and saltmarshes,Co-benefits,0,NA,1,NA,2,1,1,1,5,2,5,5,5,1,5
+Mangroves and saltmarshes,Lack of unintended consequences,1,NA,1,NA,3,2,2,1,5,5,5,5,5,2,3
+Arctic biota,Warming,5,1,1,5,4,2,5,1,1,1,2,1,1,1,0
+Arctic biota,Acidification,5,3,3,5,4,0,3,5,4,1,2,3,4,3,0
+Arctic biota,Sea level rise,5,4,4,5,4,4,5,4,5,4,5,4,4,4,5
+Arctic biota,Other drivers,1,1,1,0,0,0,0,2,2,2,0,3,3,1,2
+Arctic biota,Co-benefits,2,1,2,2,0,3,3,2,2,2,0,5,5,1,3
+Arctic biota,Lack of unintended consequences,3,3,2,3,2,3,3,2,3,5,0,5,5,3,3
+Fin fisheries,Warming,5,2,2,5,4,3,5,2,2,2,4,2,2,2,0
+Fin fisheries,Acidification,5,3,3,5,4,0,3,5,4,5,3,3,4,3,0
+Fin fisheries,Sea level rise,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5
+Fin fisheries,Other drivers,1,NA,1,NA,1,0,0,1,4,4,2,4,4,2,3
+Fin fisheries,Co-benefits,2,NA,2,NA,1,0,0,1,5,5,1,5,5,0,4
+Fin fisheries,Lack of unintended consequences,3,NA,3,NA,2,2,2,3,5,5,4,5,5,2,4
+Fish aquaculture,Warming,5,2,2,5,4,3,5,2,2,2,4,2,2,2,0
+Fish aquaculture,Acidification,5,4,4,5,5,0,4,5,5,5,4,4,5,4,0
+Fish aquaculture,Sea level rise,5,4,4,5,4,4,5,4,5,4,5,4,4,4,5
+Fish aquaculture,Other drivers,0,NA,1,NA,1,1,1,1,3,4,3,3,2,4,NA
+Fish aquaculture,Co-benefits,2,NA,1,NA,1,1,1,1,4,5,3,5,4,1,NA
+Fish aquaculture,Lack of unintended consequences,2,NA,2,NA,4,4,4,2,4,5,3,5,4,2,NA
+Coastal protection by natural ecosystems,Warming,5,2,2,5,4,3,5,2,2,2,4,2,2,2,0
+Coastal protection by natural ecosystems,Acidification,5,3,3,5,4,0,3,5,4,5,3,3,4,3,0
+Coastal protection by natural ecosystems,Sea level rise,4,1,1,4,2,1,4,1,4,1,3,2,2,1,4
+Coastal protection by natural ecosystems,Other drivers,1,NA,1,NA,2,1,1,2,5,5,5,5,5,2,4
+Coastal protection by natural ecosystems,Co-benefits,0,NA,1,NA,2,1,1,2,5,5,5,5,5,2,5
+Coastal protection by natural ecosystems,Lack of unintended consequences,1,NA,1,NA,3,2,2,2,4,5,5,5,5,2,3
+Bivalves fisheries and aquaculture,Warming,5,2,2,5,4,3,5,2,2,2,4,2,2,2,0
+Bivalves fisheries and aquaculture,Acidification,4,2,2,5,4,0,2,5,4,4,2,2,4,2,0
+Bivalves fisheries and aquaculture,Sea level rise,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5
+Bivalves fisheries and aquaculture,Other drivers,1,NA,4,NA,2,1,1,5,4,4,3,4,4,4,4
+Bivalves fisheries and aquaculture,Co-benefits,3,NA,5,NA,2,1,1,4,4,5,2,5,5,3,3
+Bivalves fisheries and aquaculture,Lack of unintended consequences,3,NA,3,NA,4,4,4,3,5,5,4,5,4,2,3
